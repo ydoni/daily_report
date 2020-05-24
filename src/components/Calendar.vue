@@ -3,12 +3,7 @@
     Calendar
     <full-calendar
       :config = "config"
-<<<<<<< HEAD
-      @day-click="dayClick">    
-=======
-      @day-click="dayClick"
-    >     
->>>>>>> f325f78ab06537c926c75d2bebecc3ae01d7006e
+      @day-click="dayClick">
     </full-calendar>
   </div>
 </template>
