@@ -76,13 +76,15 @@ export default {
     //데이터 가져오는 메소드
     getItems(){
       console.log("getItems");
-      let url = 'http://localhost:8000/api/daily';
+
+      let id = this.$route.params.date;
+      let url = 'http://localhost:8000/api/daily/'+id;
 
       axios
       .get(url)
       .then((res) => {
         this.items = this.displayItems(res.data.items);
-        console.log("데이터 가져오기 성공",res.data);
+        console.log("데이터 가져오기 성공",res.data.items);
         // this.displayItems(res.data);
       })
       .catch((error)=>{
@@ -94,9 +96,13 @@ export default {
     displayItems(res){
       console.log("displayItems",res);
       let items = [];
+
+      // 시작 시간 설정
       // let startTime = '08:00';
       let startTime = this.savedSettings.starttime;
       console.log("displayItems startTime",startTime);
+
+      //item 슬롯 만들기
       for (let i=0; i<7; i++) {
         let datetime = moment(this.$route.params.date + ' ' + startTime);
         // '' 와 ' ' 차이 때문에 오류..
@@ -110,9 +116,11 @@ export default {
           score : undefined
         }
 
+        //데이터 불러오기
         Object.keys(res).map((key) => {
-          if(key === itemKey) {
-            item = res[key]
+          // console.log("res[key].id",res[key].id);
+          if(res[key].id === itemKey) {
+            item = res[key];
           }
         });
         items.push(item);

@@ -43,19 +43,20 @@ app.all('/*', (req,res,next) => {
 //요청객체와 응답객체 (request response)
 //요청 데이터는 req 안에, 그 요청에 대한 응답은 res를 통해서
 
-// -- 데이터 가져오기
-app.get('/api/daily', (req, res) => {
+// -- 일정 데이터 가져오기
+app.get('/api/daily/:id', (req, res) => {
 
 	let data={};
-	// let query="SELECT * FROM dailyreport WHERE id LIKE '" +id+ "%' ";
-	let query="SELECT * FROM dailyreport";
 	let id = req.params.id;
+	// let query="SELECT * FROM dailyreport";
+	let query="SELECT * FROM dailyreport WHERE id LIKE '" +id+ "%'";
 
 	connection.query((query) , (error, results) => {
 		if (error) {
 			console.log("에러 발생",error);
 		} else {
 			console.log("성공:",results);
+
 			data.items=results;
 			res.json(data);
 		}
@@ -63,7 +64,7 @@ app.get('/api/daily', (req, res) => {
 	
 });
 
-//설정 가져오기
+// -- 설정 데이터 가져오기
 app.get('/api/settings', (req, res) => {
 
 	let data={};
@@ -114,6 +115,8 @@ app.post('/api/add', (req,res) => {
 
 
 // -- 수정 처리 라우터
+
+// -- 일정 데이터 추가
 app.put('/api/update',(req,res)=> {
 	console.log("update 요청 들어옴");
 	// let query ="";
@@ -136,7 +139,7 @@ app.put('/api/update',(req,res)=> {
 })
 
 
-//설정 저장
+// -- 설정 변경
 app.put('/api/savesettings',(req,res)=> {
 	console.log("settings 요청 들어옴");
 	// let query ="";
