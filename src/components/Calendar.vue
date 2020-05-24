@@ -1,9 +1,9 @@
 <template>
   <div class="calendar">
     Calendar
-    <full-calendar>
+    <full-calendar
       :config = "config"
-      @day-click="dayClick"
+      @day-click="dayClick">    
     </full-calendar>
   </div>
 </template>
