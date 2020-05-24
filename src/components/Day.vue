@@ -56,9 +56,11 @@
 </template>
 
 <script>
-import DayScore from './DayScore'
-import moment from 'moment'
-import axios from 'axios'
+import DayScore from './DayScore';
+import moment from 'moment';
+import axios from 'axios';
+
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'Day',
@@ -92,8 +94,9 @@ export default {
     displayItems(res){
       console.log("displayItems",res);
       let items = [];
-      let startTime = '08:00';
-
+      // let startTime = '08:00';
+      let startTime = this.savedSettings.starttime;
+      console.log("displayItems startTime",startTime);
       for (let i=0; i<7; i++) {
         let datetime = moment(this.$route.params.date + ' ' + startTime);
         // '' 와 ' ' 차이 때문에 오류..
@@ -148,7 +151,9 @@ export default {
 
   },
 
-  computed : {},
+  computed : {
+    ...mapGetters(['savedSettings'])
+  },
   components : {
     DayScore
   },

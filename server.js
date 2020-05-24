@@ -63,6 +63,27 @@ app.get('/api/daily', (req, res) => {
 	
 });
 
+//설정 가져오기
+app.get('/api/settings', (req, res) => {
+
+	let data={};
+	let query="SELECT * FROM daily_setting";
+
+	connection.query((query) , (error, results) => {
+		if (error) {
+			console.log("에러 발생",error);
+		} else {
+			console.log("설정 성공:",results.data);
+			data.settings=results;
+			res.json(data);
+		}
+	});
+	
+});
+
+
+
+
 
 
 // -- 프론트로부터 넘겨받은 데이터를 DB에 저장하는 라우터
@@ -103,6 +124,27 @@ app.put('/api/update',(req,res)=> {
 	let score = req.body.score; //평가
 
 	connection.query("INSERT INTO dailyreport (id, action, note, open, score) VALUES ('" +id+ "', '" +action+ "', '" +note+ "', '" +open+ "', '" +score+ "')",
+			(error,results) => {
+		if (error) {
+			console.log("에러발생 : ",error);
+		} else {
+			console.log("수정결과 : ",results);
+			res.json({result: 'success'});
+		}
+
+	});
+})
+
+
+//설정 저장
+app.put('/api/savesettings',(req,res)=> {
+	console.log("settings 요청 들어옴");
+	// let query ="";
+	// let id = req.body.id ; //날짜
+	let lang = req.body.lang ; //언어
+	let starttime = req.body.starttime ; //일정내용
+
+	connection.query("UPDATE daily_setting SET starttime='"+starttime+"', lang='"+lang+"'  WHERE id=1",
 			(error,results) => {
 		if (error) {
 			console.log("에러발생 : ",error);
