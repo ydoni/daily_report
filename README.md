@@ -10,7 +10,7 @@
 
 **개발 기능**
 
-SASS 사용 : SASS을 통한 반응형 페이지 제작
+SASS 사용 : full-calendar 패키지, 앱 css를 위해 SASS사용
 
 Vue : 뷰의 CRUD 기능 중 CRU 기능 구현
 
