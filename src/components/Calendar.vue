@@ -1,49 +1,69 @@
 <template>
   <div class="calendar">
-    Calendar
-    <full-calendar
-      :config = "config"
-      @day-click="dayClick">
-    </full-calendar>
+    <full-calendar      
+      :config = "config"      
+      :plugins = "calendarPlugins"
+      :selectable = "true"
+      @dateClick = "handleDateClick"
+      @select = "handleSelect"
+    ></full-calendar>
   </div>
 </template>
 
 <script>
-import { FullCalendar } from 'vue-full-calendar';
-// import 'FullCalendar/dist/fullcalendar.css';
+import FullCalendar from '@fullcalendar/vue';
+import { Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import '@fullcalendar/core/main.css';
+import '@fullcalendar/daygrid/main.css';
 
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'Calendar',
+
   components : {
     FullCalendar
   },
+
   methods : {
-    dayClick(date){
-      console.log(date);
-      let url =`/day/${date.format('YYYY-MM-DD')}`;
-      this.$route.push(url);
+    handleDateClick(arg){
+      console.log("handleDateClick메소드",arg.dateStr);
+      let url = `/day/${date.format('YYYY-MM-DD')}`;
+      this.$router.push(url);
+    },
+    handleSelect(e){
+      console.log(e);
     },
     applySettings(){
       this.config['locale'] = this.savedSettings.lang;
+      console.log("applySettings",this.config['locale']);
     }
   },
+
   computed: {
     ...mapGetters(['savedSettings'])
   },
+
   data() {
 
     return {
+      calendarPlugins: [
+        dayGridPlugin
+      ],
+      plugins : [
+        interactionPlugin
+      ],
       config : {
-        defaultView : 'month', //월간으로 설정
+        defaultView : 'dayGridMonth', //월간으로 설정
         header : {
           left : 'prev',
           center : 'title',
           right : 'next'
         }, //달력 타이틀부분
-        height : 500 //500 px
-        // locale : this.savedSettings.lang
+        height : 500,
+        selectable : true,
       }
     }
   },

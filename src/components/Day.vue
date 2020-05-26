@@ -133,7 +133,7 @@ export default {
       
       let url = 'http://localhost:8000/api/update';
 
-      //mysql에 데이터 전달할 때 boolean형식이 아닌 tinyint형식으로 전달해야하기떄문에
+      //mysql에 데이터 전달할 때 boolean형식이 아닌 tinyint형식으로 전달해야하기때문에
       if (item.open===false) {
         item.open = 0;
       }
