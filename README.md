@@ -27,13 +27,13 @@ FullCalendar : 달력 사용을 위해 fullcalendar 패키지 설치
 **개발 목적**
 
 Vue의 CRUD 기능 중 CRU 기능을 구현하고, MySQL를 통해 등록한 데이터를 node.js로 불러와
-RestFUL api 를 구현했습니다.
+RESTful api 를 구현했습니다.
 
 월간 달력에서 MySQL로 미리 등록한 일정 데이터를 불러와 저장한 데이터를 기준으로 한 일정을 클릭하면 확인할 수 있습니다.
 
 **개발 내용**
 
-버튼소개
+_버튼소개_
 - 오늘 : 오늘 날짜의 일정 관리로 이동
 - 달력 : 오늘 날짜의 기준인 월간 달력으로 이동
 - 설정 : 시작시간 / 언어 변경
@@ -53,6 +53,8 @@ Start 를 누르면 오늘 날짜의 일정관리로 이동합니다.
 한국어 / 영어 설정 변경 가능
 
 
+**RESTful API 구조**
+![Untitled-2-01](https://user-images.githubusercontent.com/56074618/83068955-15db5d80-a0a4-11ea-8b2c-eace5a1408f5.jpg)
 
-**Component 구조**
-
+**VUEX (store) 구조**
+![Untitled-3-01-01](https://user-images.githubusercontent.com/56074618/83069549-07417600-a0a5-11ea-9104-60b31ee382d9.jpg)
