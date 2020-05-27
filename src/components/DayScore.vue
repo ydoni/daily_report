@@ -1,7 +1,7 @@
 <template>
   <div class="score">
     <button
-      @click = "updateScore(button.score)"
+      @click = "toggleScore(button.score, item.score)"
       v-for = "button in buttons"
       v-bind:key= "button.score"
       :class="{'active':button.score===item.score}"
@@ -15,10 +15,22 @@ export default {
   name: 'DayScore',
   methods : {
     updateScore(score){
-      console.log(score);
-      console.log(this.item);
+      console.log("updateScore메소드",score, this.item.score);
       this.$emit('onUpdateScore', this.item, score);
+    },
+
+    toggleScore(score, item){
+      console.log(score, item);
+      if (score == item ){ // 활성화된 버튼 누를 때 비활성화하기
+        this.item.score = undefined;
+        this.updateScore(this.item.score);
+      } else if (score != item) { // 다른 점수 누를 때 점수 적용
+        this.item.score = score;
+        this.updateScore(this.item.score);
+      }
+
     }
+
   },
   data() {
 

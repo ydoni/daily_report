@@ -21,13 +21,18 @@
           <p
             v-if = "!item.open"
             @click = "toggleOpen(item)"
+            @keyup.enter = "updateItem(item)"
           >
             {{ item.action }}
-            <span v-if="item.action.length === 0">시간별 업무를 작성해주세요</span>
+            <span
+              v-if="item.action.length === 0"
+            >
+            시간별 업무를 작성해주세요
+            </span>
           </p>
           <input type = "text"
           v-if = "item.open"
-          v-model = "item.action"          
+          v-model = "item.action"
           placeholder = "업무 제목">
         </div>
 
@@ -40,14 +45,14 @@
 
         <div class="note" v-if="item.open">
           <textarea
-          v-model = "item.note"
-          @keyup.enter = "updateItem(item)"
+          v-model = "item.note"          
           placeholder = "업무에 대한 자세한 내용을 작성해주세요.">            
           </textarea>
         </div>
 
         <div class="buttons" v-if="item.open">
-          <button class="save" @click="updateItem(item)">저장</button>
+          <button class="save" @click="saveItem(item)">등록</button>
+          <button class="update" @click="updateItem(item)">수정</button>
           <button class="cancel" @click="toggleOpen(item)">취소</button>
         </div>
       </li>
@@ -69,8 +74,7 @@ export default {
     //평가 등록 메소드
     onUpdateScore(item, score){
       item.score=score;
-      this.updateItem(item);
-      console.log("DayComponent",score);
+      // this.updateItem(item);
     },
 
     //데이터 가져오는 메소드
@@ -128,23 +132,53 @@ export default {
       return items;
     },
 
-    //데이터 등록 메소드 (이 프로젝트에서는 수정기능으로 사용함)
-    updateItem(item){
-      
-      let url = 'http://localhost:8000/api/update';
+    
+    // checkSpan(a){
+    //   a=a+1;
+    //   console.log("a:",a);
+    // },
 
-      //mysql에 데이터 전달할 때 boolean형식이 아닌 tinyint형식으로 전달해야하기때문에
-      if (item.open===false) {
-        item.open = 0;
+    checkP(a,b){
+      let c=this.a++;
+      console.log("a:",c);
+      if(a%2==0){
+        b==!b;
       }
-      else {
-        item.open = 1;
+      else{
+        b==false;
       }
+    },
+    
+
+    //저장 버튼 메소드
+    saveItem(item){      
+      let id = this.$route.params.date;
+      let url = 'http://localhost:8000/api/add'
+
+      console.log('신규 일정 등록',item);
+      axios.post(url,item)
+      .then((res) => {
+        this.getItems();
+        // item.open = false;
+      })
+      .catch((error) => {
+        console.log("saveItem 에러",error);
+      })
+    },
+
+
+    //데이터 수정 메소드
+    updateItem(item){
+      let id = this.$route.params.date;
+      let url = 'http://localhost:8000/api/update/'+id
+
+
 
       console.log('업데이트',item);
       axios.put(url,item)
       .then((res) => {
         this.getItems();
+        // item.open = false;
       })
       .catch((error) => {
         console.log("updateItem 에러",error);
@@ -154,9 +188,9 @@ export default {
     //action 토글 메소드
     toggleOpen(item){
       item.open = !item.open;
-    }
+    },
 
-
+    
   },
 
   computed : {
@@ -165,9 +199,11 @@ export default {
   components : {
     DayScore
   },
-  data() {
+  data() {    
     return {
-      items: []
+      items: [],
+      a : 1,
+      b : false
     }
   },
   props: {

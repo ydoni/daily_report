@@ -87,9 +87,9 @@ app.get('/api/settings', (req, res) => {
 
 
 
-// -- 프론트로부터 넘겨받은 데이터를 DB에 저장하는 라우터
+// -- 데이터를 DB에 저장하는 라우터
 
-// -- 일정추가
+// -- 일정추가 라우터
 app.post('/api/add', (req,res) => {
 	console.log("add 요청 들어옴");
 	let id = req.body.id ; //날짜
@@ -97,8 +97,9 @@ app.post('/api/add', (req,res) => {
 	let note = req.body.note ; //일정내용
 	let open = req.body.open; //open
 	let score = req.body.score; //평가
+	let query = "INSERT INTO dailyreport (id, action, note, open, score) VALUES ('" +id+ "', '" +action+ "', '" +note+ "','0', '" +score+ "')";
 
-	connection.query("INSERT INTO dailyreport (id, action, note, open, score) VALUES ('" +id+ "', '" +action+ "', '" +note+ "', '" +open+ "', '" +score+ "')", (error,results) => {    // mysql쿼리문연결
+	connection.query(query, (error,results) => {    // mysql쿼리문연결
 
 		if (error) {
 			console.log("에러발생 : ",error);
@@ -112,21 +113,23 @@ app.post('/api/add', (req,res) => {
 
 
 
-
-
 // -- 수정 처리 라우터
 
-// -- 일정 데이터 추가
-app.put('/api/update',(req,res)=> {
-	console.log("update 요청 들어옴");
-	// let query ="";
+// -- 일정 데이터 수정 라우터
+app.put('/api/update/:id',(req,res)=> {
+	console.log("update 요청 들어옴");	
 	let id = req.body.id ; //날짜
 	let action = req.body.action ; //일정제목
 	let note = req.body.note ; //일정내용
 	let open = req.body.open; //open
 	let score = req.body.score; //평가
+	let query = "UPDATE dailyreport SET id='" +id+ "', action='" +action+ "', note='" +note+ "', open='0', score='" +score+ "' WHERE id='"+id+"'";	
 
-	connection.query("INSERT INTO dailyreport (id, action, note, open, score) VALUES ('" +id+ "', '" +action+ "', '" +note+ "', '" +open+ "', '" +score+ "')",
+	if(score == undefined){
+		score = 0;
+	}
+
+	connection.query(query,
 			(error,results) => {
 		if (error) {
 			console.log("에러발생 : ",error);
@@ -142,8 +145,6 @@ app.put('/api/update',(req,res)=> {
 // -- 설정 변경
 app.put('/api/savesettings',(req,res)=> {
 	console.log("settings 요청 들어옴");
-	// let query ="";
-	// let id = req.body.id ; //날짜
 	let lang = req.body.lang ; //언어
 	let starttime = req.body.starttime ; //일정내용
 
@@ -160,25 +161,6 @@ app.put('/api/savesettings',(req,res)=> {
 })
 
 
-
-
-
-
-// -- DB데이터 삭제하는 라우터
-// app.delete('/api/delete/:id',(req,res) => {
-// 	console.log("delete 요청 들어옴");
-// 	let id = req.params.id; //주소값으로 받을 때는 params 객체를 사용한다.
-
-// 	connection.query("DELETE FROM dailyreport WHERE id="+id,(error,results)=>{
-// 		if (error) {
-// 			console.log(error);
-// 			connection.end();
-// 		} else {
-// 			console.log(results);
-// 			res.json({result: 'success'});
-// 		}
-// 	});
-// })
 
 
 

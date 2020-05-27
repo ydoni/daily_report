@@ -2,8 +2,8 @@
 $black: #212529;
 $gray: #868e96;
 $lgray: #f8f9fa;
-$keycolor: #ee9fff;
-$subcolor: #0c8599;
+$keycolor: #f56bea;
+$subcolor: #f389eb;
 $bg: #fff9db;
 .nav {
     position: fixed;
@@ -150,7 +150,8 @@ $bg: #fff9db;
                 text-align: center;
                 padding: 10px 0;
                 button {
-                    width: 48%;
+                    width: 30%;
+                    margin: 0 1%;
                     padding: 10px 0;
                     font-size: 14px;
                     border-radius: 50px;
@@ -158,6 +159,9 @@ $bg: #fff9db;
                     color: #fff;
                     &.save {
                         background: $keycolor;
+                    }
+                    &.update {
+                        background: $subcolor;
                     }
                     &.cancel {
                         background: $gray;
@@ -170,7 +174,7 @@ $bg: #fff9db;
 
 .calendar {
     padding: 30px 4%;
-    .fc {
+    .fc {        
         button {
             border-radius: 50px;
             background: $lgray;
@@ -185,13 +189,18 @@ $bg: #fff9db;
             font-weight: bold;
         }
         &-view {
+            height : 500px;
             margin-top: 30px;
             th,
             td {
                 padding: 5px;
                 font-weight: bold;
             }
+            &-container {
+                height : 500px;
+            }
         }
+        
         &-today {
             background: $keycolor !important;
             color: #fff;
