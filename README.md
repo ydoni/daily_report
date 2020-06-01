@@ -22,7 +22,10 @@ FullCalendar : 달력 사용을 위해 fullcalendar 패키지 설치
 
 
 **프로젝트 시행 영상**
+
 [![daily_report](http://img.youtube.com/vi/JTsuxY3P0XE/0.jpg)](https://youtu.be/JTsuxY3P0XE)
+
+위 이미지를 클릭하면 유튜브를 통해 시행 영상을 확인할 수 있습니다.
 
 **개발 목적**
 
